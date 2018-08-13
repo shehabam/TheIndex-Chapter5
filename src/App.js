@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios";
-
+import BookList from './BookList'
 // Components
 import Sidebar from "./Sidebar";
 import Loading from "./Loading";
@@ -40,32 +40,25 @@ class App extends Component {
     if (this.state.loading) {
       return <Loading />;
     } else {
-      return (
-        <Switch>
+      return <Switch>
           <Redirect exact from="/" to="/authors" />
           <Route path="/authors/:authorID" component={AuthorDetail} />
-          <Route
-            path="/authors/"
-            render={props => (
-              <AuthorsList {...props} authors={this.state.authors} />
-            )}
-          />
-        </Switch>
-      );
+          <Route path="/authors/" render={props => <AuthorsList {...props} authors={this.state.authors} />} />
+          <Route path="/books/" render={props => <BookList {...props}/>} />
+        </Switch>;
     }
   }
 
   render() {
-    return (
-      <div id="app" className="container-fluid">
+    return <div id="app" className="container-fluid">
         <div className="row">
           <div className="col-2">
             <Sidebar />
           </div>
           <div className="content col-10">{this.getView()}</div>
+          {/* <BookList /> */}
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
